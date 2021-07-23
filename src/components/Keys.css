@@ -1,0 +1,41 @@
+.keyboard {
+    margin: auto;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.key-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.key {
+    height: 2rem;
+    width: 2rem;
+    margin: 4px;
+    padding: 0.5rem;
+    border: 1px rgb(218, 218, 218) solid;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.shift {
+    width: 4rem;
+}
+
+.space {
+    width: 20rem;
+}
+
+.keyboard div.key-row:nth-child(2){
+    margin-left: 0rem;
+}
+.keyboard div.key-row:nth-child(3){
+    margin-left: 0rem;
+}
+.keyboard div.key-row:nth-child(4){
+    margin-left: -6rem;
+}
