@@ -1,7 +1,9 @@
 // eslint-disable-next-line
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { Key } from "./Key";
+import { keyCodes } from "./KeyCodes";
 
-import "./Keys.css";
+import "./Keys.scss";
 
 const KeyboardLayout = [
 	"q w e r t y u i o p [ ]",
@@ -12,49 +14,64 @@ const KeyboardLayout = [
 
 export const Keys = () => {
 	// const [input, setInput] = useState("");
-	// const [layout, setLayout] = useState("default");
-	// const keyboard = useRef();
+	// const [pressedKeys, setLayout] = useState();
+	const keyboard = useRef();
 
-	// const onChange = (input) => {
-	// 	setInput(input);
-	// 	console.log("Input changed", input);
-	// };
+	useEffect(() => {
+		keyboard.current.focus();
+	}, []);
 
-	// const handleShift = () => {
-	// 	const newLayoutName = layout === "default" ? "shift" : "default";
+	const onKeyDown = (button) => {
+		console.log("Button pressed", button.code);
+		let el = document.querySelector(`#${button.code}`);
+		if (el) {
+			document
+				.querySelector(`#${button.code}`)
+				?.classList.add("key-down");
+		}
 
-	// 	setLayout(newLayoutName);
-	// };
+		if (button.code === "ShiftRight" || button.code === "ShiftLeft")
+			handleShift();
+	};
+	const onKeyUp = (button) => {
+		let el = document.querySelector(`#${button.code}`);
+		console.log("Button released", button.code);
+		if (el) {
+			document
+				.querySelector(`#${button.code}`)
+				.classList.remove("key-down");
+		}
+	};
 
-	// const onKeyPress = (button) => {
-	// 	console.log("Button pressed", button);
+	const handleShift = () => {
+		console.log("DLKJFL:SDKJF:DLSKJFL:D");
+	};
 
-	// 	/**
-	// 	 * If you want to handle the shift and caps lock buttons
-	// 	 */
-	// 	if (button === "{shift}" || button === "{lock}" || button === "{shiftright}" || button === "{shiftleft}") handleShift();
-	// };
-
-	const renderKeyboard = () =>(
-		KeyboardLayout.map((row) => (
-            <div className="key-row">
-			{row.split(" ").map((char) => {
-                let keyClassName = `key ${char}`;
-				return <div className={keyClassName}>{char}</div>;
-			})}
-            </div>
-		)
-        )
-    )
-
-	// const onChangeInput = (event) => {
-	// 	const input = event.target.value;
-	// 	setInput(input);
-	// 	keyboard.current.setInput(input);
-	// };
+	const renderKeyboard = () =>
+		KeyboardLayout.map((row, i) => (
+			<div className="key-row" key={i}>
+				{row.split(" ").map((keyName) => {
+					let keyCode = keyCodes.find((k) => k.name === keyName).code;
+					return (
+						<Key
+							keyName={keyName}
+							key={keyName}
+							keyCode={keyCode}
+							// ref={keyCode}
+						/>
+					);
+				})}
+			</div>
+		));
 
 	return (
-		<div className="keyboard">
+		<div
+			className="keyboard"
+			onKeyDown={onKeyDown}
+			onKeyUp={onKeyUp}
+			tabIndex="0"
+			ref={keyboard}
+		>
 			<input
 				// value={input}
 				placeholder={"lalalalal"}
