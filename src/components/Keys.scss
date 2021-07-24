@@ -21,7 +21,9 @@
     text-align: center;
     line-height: 2rem;
 }
-
+.shift-pressed {
+    background-color: rgb(253, 184, 184);
+}
 .shift {
     width: 4rem;
 }
@@ -30,6 +32,9 @@
     width: 20rem;
 }
 
+.keyboard div.key-row:nth-child(1){
+    margin-left: -4rem;
+}
 .keyboard div.key-row:nth-child(2){
     margin-left: 0rem;
 }

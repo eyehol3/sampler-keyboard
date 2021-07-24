@@ -4,10 +4,10 @@ import React from "react";
 
 
 export const Key = (props) => {
-    const {keyName, keyCode} = props;
+    const {keyName, keyCode, shiftState} = props;
 
    return (
-       <div id={keyCode} className={`key ${keyName}`}>{keyName}</div>
+       <div id={keyCode} className={`key ${keyName} ${shiftState? "shift-pressed":null}`}>{keyName}</div>
    ) 
 
 
