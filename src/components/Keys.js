@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Key } from "./Key";
 import { keyCodes } from "./KeyCodes";
+import { SoundEngine } from "./SoundEngine";
 
 import "./Keys.scss";
 
@@ -89,6 +90,7 @@ export const Keys = () => {
 				// onChange={onChangeInput}
 			/> */}
 			{renderKeyboard()}
+            <SoundEngine/>
 		</div>
 	);
 };
