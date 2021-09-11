@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 // import MicRecorder from "mic-recorder-to-mp3";
 const recordAudio = () =>
 	new Promise(async (resolve) => {
@@ -39,35 +39,37 @@ const recordAudio = () =>
 export const SoundEngine = () => {
 	// const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 	// const recorder = recordAudio().then(r=>r)
-	let recorder = useRef();
+	const [recorder, setRecorder] = useState();
 
 	const [state, setState] = useState({
 		isRecording: false,
 		blobURL: "",
-		isBlocked: true,
+		isBlocked: false,
 		audio: null,
 	});
 
-	useEffect(() => {
-		recordAudio().then((r) => {
-			setState({ isBlocked: false });
-			recorder.current = r;
-		});
-	}, []);
+	// useEffect(() => {
+	// 	recordAudio().then((r) => {
+	// 		setState({ isBlocked: false });
+	// 		recorder.current = r;
+	// 	});
+	// }, []);
 
 	const start = () => {
 		if (state.isBlocked) {
 			console.log("Permission Denied");
 		} else {
 			console.log(recorder);
-			recorder.current.start();
-
-			setState({ isRecording: true });
+			recordAudio().then((r) => {
+				r.start();
+				setRecorder(r);
+				setState({ isRecording: true });
+			});
 		}
 	};
 
 	const stop = () => {
-		recorder.current
+		recorder
 			.stop()
 			.then((recordedAudio) => {
 				setState({ audio: recordedAudio, isRecording: false });
@@ -76,22 +78,29 @@ export const SoundEngine = () => {
 	};
 
 	const play = () => {
-        console.log(state.audio);
+		console.log(state.audio);
 		state.audio.play();
 	};
 	// audio.play();
 	return (
 		<div>
-			<button onClick={start} disabled={state.isRecording || state.isBlocked}>
+			<button
+				onClick={start}
+				disabled={state.isRecording || state.isBlocked}
+			>
 				Record
 			</button>
 			<button onClick={stop} disabled={!state.isRecording}>
 				Stop
 			</button>
+			{/* <button onClick={play} disabled={!state.audio}> */}
 			<button onClick={play} disabled={!state.audio}>
 				Play
 			</button>
-			<audio src={state.audio? state.audio.audioUrl:null} controls="controls" />
+			<audio
+				src={state.audio ? state.audio.audioUrl : null}
+				controls="controls"
+			/>
 		</div>
 	);
 };
