@@ -21,9 +21,10 @@ jobs:
         node-version: 15
         cache: 'npm'
     - name: Install dependencies
-      run: npm ci
+      run: yarn install --frozen-lockfile
+
     - name: Build
-      run: ./bin/update-gh-pages
+      run: yarn build
       env:
         GITHUB_TOKEN: ${{ secrets.github_token }}
         DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
