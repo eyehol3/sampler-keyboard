@@ -12,23 +12,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v2
+    - name: Configure Git
+      run |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      
+      - uses: actions/checkout@v2
       with: 
         fetch-depth: 0
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: 15
         cache: 'npm'
+    
     - name: Install dependencies
       run: yarn install --frozen-lockfile
 
     - name: Build
-      run: ./bin/update-gh-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.github_token }}
-        DEPLOY_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+      run: yarn build
+      
+      
+      # env:
+      #   GITHUB_TOKEN: ${{ secrets.github_token }}
+      #   DEPLOY_TOKEN: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
 
 
