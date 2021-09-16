@@ -35,7 +35,7 @@ jobs:
 
       - name: Publish
         run: |
-          git subtree push --prefix public origin gh-pages
+          git subtree push -f --prefix public origin gh-pages
 
       # env:
       #   GITHUB_TOKEN: ${{ secrets.github_token }}
