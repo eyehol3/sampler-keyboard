@@ -1,12 +1,12 @@
-import './App.css';
-import {Keys} from './components/Keys'
+import "./App.css";
+import { KeyboardManager } from "./components/KeyboardManager";
 
 function App() {
-  return (
-    <div className="App">
-      <Keys/>
-    </div>
-  );
+	return (
+		<div className="App">
+            <KeyboardManager />
+		</div>
+	);
 }
 
 export default App;
